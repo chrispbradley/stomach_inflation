@@ -370,7 +370,7 @@ geometricField.CreateFinish()
 
 # Update the geometric field parameters
 for nodeIdx in range(1,numberOfNodes+1):
-    nodeDomain = decomposition.NodeDomainGet(nodeIdx,geometricMeshComponent)
+    nodeDomain = decomposition.NodeDomainGet(geometricMeshComponent,nodeIdx)
     if nodeDomain == computationalNodeNumber:
         for coordinateIdx in range(1,4):
             for derivativeIdx in geometricDerivatives:
@@ -641,7 +641,7 @@ fittingBoundaryConditions = oc.BoundaryConditions()
 fittingSolverEquations.BoundaryConditionsCreateStart(fittingBoundaryConditions)
 # No stress at the inlet
 for nodeIdx in range(0,len(inletNodes1)):
-    nodeDomain = decomposition.NodeDomainGet(inletNodes1[nodeIdx],stressMeshComponent)
+    nodeDomain = decomposition.NodeDomainGet(stressMeshComponent,inletNodes1[nodeIdx])
     if nodeDomain == computationalNodeNumber:
         for componentIdx in range(1,7):
             for derivativeIdx in stressDerivatives1:
@@ -649,7 +649,7 @@ for nodeIdx in range(0,len(inletNodes1)):
                                                   1,derivativeIdx,inletNodes1[nodeIdx],\
                                                   componentIdx,oc.BoundaryConditionsTypes.FIXED,0.0) #no stress
 for nodeIdx in range(0,len(inletNodes2)):
-    nodeDomain = decomposition.NodeDomainGet(inletNodes2[nodeIdx],stressMeshComponent)
+    nodeDomain = decomposition.NodeDomainGet(stressMeshComponent,inletNodes2[nodeIdx])
     if nodeDomain == computationalNodeNumber:
         for componentIdx in range(1,7):
             for derivativeIdx in stressDerivatives2:
@@ -658,7 +658,7 @@ for nodeIdx in range(0,len(inletNodes2)):
                                                   componentIdx,oc.BoundaryConditionsTypes.FIXED,0.0) #no stress
 # No stress at the outlet
 for nodeIdx in range(0,len(outletNodes1)):
-    nodeDomain = decomposition.NodeDomainGet(outletNodes1[nodeIdx],stressMeshComponent)
+    nodeDomain = decomposition.NodeDomainGet(stressMeshComponent,outletNodes1[nodeIdx])
     if nodeDomain == computationalNodeNumber:
         for componentIdx in range(1,7):
             for derivativeIdx in stressDerivatives1:
@@ -666,7 +666,7 @@ for nodeIdx in range(0,len(outletNodes1)):
                                                   1,derivativeIdx,outletNodes1[nodeIdx],\
                                                   componentIdx,oc.BoundaryConditionsTypes.FIXED,0.0) #no stress
 for nodeIdx in range(0,len(outletNodes2)):
-    nodeDomain = decomposition.NodeDomainGet(outletNodes2[nodeIdx],stressMeshComponent)
+    nodeDomain = decomposition.NodeDomainGet(stressMeshComponent,outletNodes2[nodeIdx])
     if nodeDomain == computationalNodeNumber:
         for componentIdx in range(1,7):
             for derivativeIdx in stressDerivatives2:
@@ -733,7 +733,7 @@ for stepIdx, pressure in enumerate(pressureSteps):
     if (displacementInterpolation == CUBIC):
         # No displacement at the inlet
         for nodeIdx in range(0,len(inletNodes1)):
-            nodeDomain = decomposition.NodeDomainGet(inletNodes1[nodeIdx],displacementMeshComponent)
+            nodeDomain = decomposition.NodeDomainGet(displacementMeshComponent,inletNodes1[nodeIdx])
             if nodeDomain == computationalNodeNumber:
                 for derivativeIdx in displacementDerivatives1:
                     elasticityBoundaryConditions.AddNode(elasticityDependentField,oc.FieldVariableTypes.U, \
@@ -746,7 +746,7 @@ for stepIdx, pressure in enumerate(pressureSteps):
                                                          1,derivativeIdx,inletNodes1[nodeIdx],3,\
                                                          oc.BoundaryConditionsTypes.FIXED,0.0) #no x3 displacement
         for nodeIdx in range(0,len(inletNodes2)):
-            nodeDomain = decomposition.NodeDomainGet(inletNodes2[nodeIdx],displacementMeshComponent)
+            nodeDomain = decomposition.NodeDomainGet(displacementMeshComponent,inletNodes2[nodeIdx])
             if nodeDomain == computationalNodeNumber:
                 for derivativeIdx in displacementDerivatives2:
                     elasticityBoundaryConditions.AddNode(elasticityDependentField,oc.FieldVariableTypes.U,\
@@ -760,7 +760,7 @@ for stepIdx, pressure in enumerate(pressureSteps):
                                                          oc.BoundaryConditionsTypes.FIXED,0.0) #no x3 displacement
         # No displacement at the outlet
         for nodeIdx in range(0,len(outletNodes1)):
-            nodeDomain = decomposition.NodeDomainGet(outletNodes1[nodeIdx],displacementMeshComponent)
+            nodeDomain = decomposition.NodeDomainGet(displacementMeshComponent,outletNodes1[nodeIdx])
             if nodeDomain == computationalNodeNumber:
                 for derivativeIdx in displacementDerivatives1:
                     elasticityBoundaryConditions.AddNode(elasticityDependentField,oc.FieldVariableTypes.U,\
@@ -773,7 +773,7 @@ for stepIdx, pressure in enumerate(pressureSteps):
                                                          1,derivativeIdx,outletNodes1[nodeIdx],3,\
                                                          oc.BoundaryConditionsTypes.FIXED,0.0)
         for nodeIdx in range(0,len(outletNodes2)):
-            nodeDomain = decomposition.NodeDomainGet(outletNodes2[nodeIdx],displacementMeshComponent)
+            nodeDomain = decomposition.NodeDomainGet(displacementMeshComponents,outletNodes2[nodeIdx])
             if nodeDomain == computationalNodeNumber:
                 for derivativeIdx in displacementDerivatives2:
                     elasticityBoundaryConditions.AddNode(elasticityDependentField,oc.FieldVariableTypes.U,\
@@ -788,7 +788,7 @@ for stepIdx, pressure in enumerate(pressureSteps):
     else:
         # No displacement at the inlet
         for nodeIdx in range(0,len(inletNodes)):
-            nodeDomain = decomposition.NodeDomainGet(inletNodes[nodeIdx],displacementMeshComponent)
+            nodeDomain = decomposition.NodeDomainGet(displacementMeshComponent,inletNodes[nodeIdx])
             if nodeDomain == computationalNodeNumber:
                 for derivativeIdx in displacementDerivatives1:
                     elasticityBoundaryConditions.AddNode(elasticityDependentField,oc.FieldVariableTypes.U,\
@@ -803,7 +803,7 @@ for stepIdx, pressure in enumerate(pressureSteps):
                     
         # No displacement at the outlet
         for nodeIdx in range(0,len(outletNodes)):
-            nodeDomain = decomposition.NodeDomainGet(outletNodes[nodeIdx],displacementMeshComponent)
+            nodeDomain = decomposition.NodeDomainGet(displacementMeshComponent,outletNodes[nodeIdx])
             if nodeDomain == computationalNodeNumber:
                 for derivativeIdx in displacementDerivatives1:
                     elasticityBoundaryConditions.AddNode(elasticityDependentField,oc.FieldVariableTypes.U,\
@@ -818,7 +818,7 @@ for stepIdx, pressure in enumerate(pressureSteps):
                     
     # Apply incremented cavity pressure on the stomach surface:
     for nodeIdx in range(0,len(stomachSurface)):
-        nodeDomain = decomposition.NodeDomainGet(stomachSurface[nodeIdx],displacementMeshComponent)
+        nodeDomain = decomposition.NodeDomainGet(displacementMeshComponent,stomachSurface[nodeIdx])
         if nodeDomain == computationalNodeNumber:
             # xi_3 is the transmural direction
             xiDirection = 3
@@ -846,14 +846,14 @@ for stepIdx, pressure in enumerate(pressureSteps):
     else:
         # Fix reference hydrostatic pressure at the inlet nodes
         for nodeIdx in range(0,len(inletNodes)):
-            nodeDomain = decomposition.NodeDomainGet(inletNodes[nodeIdx],hydrostaticPressureMeshComponent)
+            nodeDomain = decomposition.NodeDomainGet(hydrostaticPressureMeshComponent,inletNodes[nodeIdx])
             if nodeDomain == computationalNodeNumber:
                 elasticityBoundaryConditions.SetNode(elasticityDependentField,oc.FieldVariableTypes.U,\
                                                      1,oc.GlobalDerivativeConstants.NO_GLOBAL_DERIV,\
                                                      inletNodes[nodeIdx],4,oc.BoundaryConditionsTypes.FIXED,pReference) #reference hydrostatic pressure
         # Fix reference hydrostatic pressure at the outlet nodes
         for nodeIdx in range(0,len(outletNodes)):
-            nodeDomain = decomposition.NodeDomainGet(outletNodes[nodeIdx],hydrostaticPressureMeshComponent)
+            nodeDomain = decomposition.NodeDomainGet(hydrostaticPressureMeshComponent,outletNodes[nodeIdx])
             if nodeDomain == computationalNodeNumber:
                 elasticityBoundaryConditions.SetNode(elasticityDependentField,oc.FieldVariableTypes.U,\
                                                      1,oc.GlobalDerivativeConstants.NO_GLOBAL_DERIV,\
